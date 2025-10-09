@@ -18,3 +18,9 @@ export interface Team {
   owner: number;
   pros: number[];
 }
+
+export interface AuthContextType {
+  currentUser: User | null
+  login: (user: User) => void
+  logout: () => void
+}
