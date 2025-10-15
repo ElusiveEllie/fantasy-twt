@@ -2,10 +2,12 @@ import { useAuth } from "../contexts/AuthContext"
 import { useNavigate } from "react-router-dom"
 import { getAllUsers } from "../services/users"
 import { useState, useEffect } from 'react'
+import LoadingSpinner from "../components/LoadingSpinner"
 import type { User } from "../types"
+import ErrorCard from "../components/ErrorCard"
 
 function HomePage() {
-  const { login, logout, currentUser} = useAuth()
+  const { login } = useAuth()
   const navigate = useNavigate()
   const [users, setUsers] = useState<User[]>([])
   const [loading, setLoading] = useState(true)
@@ -28,77 +30,41 @@ function HomePage() {
   }, [])
 
   if (error) {
-    return (
-      <div>
-        <h1>Error</h1>
-        <p>{error}</p>
-      </div>
-    );
+    return <ErrorCard error={error} onRetry={() => window.location.reload()}/>
   }
 
   if (loading) {
-    return (
-      <div>
-        <h1>Loading...</h1>
-      </div>
-    );
+    return <LoadingSpinner message="Loading Fighters..." subMessage="Preparing the arena"/>
   }
 
   return (
-    <div>
-      {currentUser && (
-        <div>
-        <button 
-          onClick={() => {
-            navigate('/dashboard')
-          }} 
-          style={{ 
-            position: 'absolute', 
-            top: '10px', 
-            left: '10px',
-            padding: '5px 10px'
-          }}
-        >
-          Dashboard
-        </button>
-        <button 
-          onClick={() => {
-            logout()
-            navigate('/')
-          }} 
-          style={{ 
-            position: 'absolute', 
-            top: '10px', 
-            left: '130px',
-            padding: '5px 10px'
-          }}
-        >
-          Logout
-        </button>
-        <span style={{ 
-          position: 'absolute', 
-          top: '15px', 
-          left: '220px', 
-          fontSize: '14px',
-          color: '#666'
-        }}>
-          Logged in as {currentUser?.name}
-        </span>
-      </div>
-      )}
-      <h1>Choose Your Fighter!</h1>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+    <div className="m-0 w-full pt-6 pb-8">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-4xl font-bold text-center mb-12">
+          <span className="text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">Choose Your Fighter</span>
+        </h1>
+      
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       {users.map(user => (
-        <div key={user.id} style={{ padding: '10px', border: '1px solid #ccc', textAlign: 'center' }}>
-          <h3>{user.name}</h3>
-          <button onClick={() => {
-            login(user)
-            navigate(`/dashboard`)
-          }}>
+        <div 
+          key={user.id} 
+          className="bg-gray-700 border-2 border-cyan-400/50 rounded-lg p-6 text-center hover:border-cyan-400 hover:shadow-2xl hover:shadow-cyan-400/25 hover:-translate-y-1 transition-all duration-300"
+        >
+          <h3 className="text-xl font-semibold text-white mb-4">
+            {user.name}
+          </h3>
+          <button 
+            onClick={() => {
+              login(user)
+              navigate(`/dashboard`)
+            }}
+            className="w-full bg-gray-500 text-white font-medium py-3 px-6 rounded-lg hover:bg-gray-400 hover:shadow-lg transition-all duration-200"
+          >
             Select Fighter
           </button>
         </div>
       ))}
+      </div>
     </div>
     </div>
   )

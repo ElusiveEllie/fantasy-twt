@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import type { User, League } from '../types';
 import { getLeagueById } from '../services/leagues';
 import { useAuth } from '../contexts/AuthContext';
+import LoadingSpinner from '../components/LoadingSpinner';
+import ErrorCard from '../components/ErrorCard';
 
 function Dashboard() {
   const [user, setUser] = useState<User | null>(null)
@@ -10,15 +12,7 @@ function Dashboard() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  const { logout, currentUser, isLoading } = useAuth();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!currentUser && !isLoading) {
-      console.log("No current user, redirecting home")
-      navigate('/')
-    }
-  }, [currentUser, isLoading, navigate])
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,86 +36,49 @@ function Dashboard() {
   }, [currentUser])
 
   if (error) {
-    return (
-      <div>
-        <h1>Error</h1>
-        <p>{error}</p>
-      </div>
-    );
+    return <ErrorCard error={error} onRetry={() => window.location.reload()}/>
   }
 
   if (loading) {
-    return (
-      <div>
-        <h1>Loading...</h1>
-      </div>
-    );
+    return <LoadingSpinner message="Entering the Arena..." subMessage="Preparing for battle"/>
   }
 
   return (
-    <div>
-      {currentUser && (
-        <div>
-          <button 
-          onClick={() => {
-            navigate('/dashboard')
-          }} 
-          style={{ 
-            position: 'absolute', 
-            top: '10px', 
-            left: '10px',
-            padding: '5px 10px'
-          }}
-        >
-          Dashboard
-        </button>
-        <button 
-          onClick={() => {
-            logout()
-            navigate('/')
-          }} 
-          style={{ 
-            position: 'absolute', 
-            top: '10px', 
-            left: '130px',
-            padding: '5px 10px'
-          }}
-        >
-          Logout
-        </button>
-        <span style={{ 
-          position: 'absolute', 
-          top: '15px', 
-          left: '220px', 
-          fontSize: '14px',
-          color: '#666'
-        }}>
-          Logged in as {currentUser?.name}
-        </span>
+    <div className="p-6">
+      <div className='mb-8'>
+        <h1 className="text-4xl font-bold text-white mb-2">
+          <span className="text-cyan-400">Dashboard</span>
+        </h1>
+        <p className="text-gray-300 text-lg">
+          Welcome back, <span className="text-cyan-400 font-medium">{user?.name}</span>
+        </p>
       </div>
-      )}
-      
-      <h1>Dashboard</h1>
-      <p>Current user: {user?.name}</p>
-      <h2>Leagues:</h2>
-      <ul>
-        {leagues.map(league => (
-          <li key={league.id}>
-            <Link
-            to={`/league/${league.id}`}
-            style={{
-              textDecoration: 'none',
-              color: '#0066cc',
-              fontSize: '16px',
-              display: 'block',
-              padding: '8px 0',
-              borderBottom: '1px solid #eee'
-            }}>
-              {league.name}
-            </Link>
-          </li>
-        ))}
-      </ul>
+
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold text-white mb-6">
+          Your Leagues
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {leagues.map(league => (
+            <div 
+              key={league.id}
+              className="bg-gray-700 border-2 border-cyan-400/50 rounded-lg p-6 hover:border-cyan-400 hover:shadow-2xl hover:shadow-cyan-400/25 hover:-translate-y-1 transition-all duration-300"
+            >
+              <h3 className="text-xl font-semibold text-white mb-4">
+                {league.name}
+              </h3>
+              
+              <Link
+                to={`/league/${league.id}`}
+                className="block w-full bg-gray-600 text-white font-medium py-3 px-6 rounded-lg hover:bg-gray-500 hover:shadow-lg hover:shadow-cyan-400/25 transition-all duration-200 text-center"
+              >
+                View League
+              </Link>
+            </div>
+          ))}
+        </div>
+
+      </div>
     </div>
   )
 }
