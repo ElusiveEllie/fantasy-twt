@@ -23,4 +23,5 @@ export interface AuthContextType {
   currentUser: User | null
   login: (user: User) => void
   logout: () => void
+  isLoading: boolean
 }
