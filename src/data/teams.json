@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "First Team",
+    "owner": 1,
+    "pros": [1]
+  },
+  {
+    "id": 2,
+    "name": "Second Team",
+    "owner": 2,
+    "pros": [2, 5]
+  },
+  {
+    "id": 3,
+    "name": "Elite Squad",
+    "owner": 3,
+    "pros": [1, 5]
+  },
+  {
+    "id": 4,
+    "name": "Budget Ballers",
+    "owner": 4,
+    "pros": [4, 5]
+  },
+  {
+    "id": 5,
+    "name": "Balanced Build",
+    "owner": 5,
+    "pros": [2, 5]
+  },
+  {
+    "id": 6,
+    "name": "High Risk High Reward",
+    "owner": 6,
+    "pros": [1, 5]
+  },
+  {
+    "id": 7,
+    "name": "Mid Tier Masters",
+    "owner": 7,
+    "pros": [4, 5]
+  },
+  {
+    "id": 8,
+    "name": "Consistent Performers",
+    "owner": 8,
+    "pros": [2, 5]
+  }
+]
