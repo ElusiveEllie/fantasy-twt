@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 import type { User } from "../types"
 
 function HomePage() {
-  const { login } = useAuth()
+  const { login, logout, currentUser} = useAuth()
   const navigate = useNavigate()
   const [users, setUsers] = useState<User[]>([])
   const [loading, setLoading] = useState(true)
@@ -46,6 +46,46 @@ function HomePage() {
 
   return (
     <div>
+      {currentUser && (
+        <div>
+        <button 
+          onClick={() => {
+            navigate('/dashboard')
+          }} 
+          style={{ 
+            position: 'absolute', 
+            top: '10px', 
+            left: '10px',
+            padding: '5px 10px'
+          }}
+        >
+          Dashboard
+        </button>
+        <button 
+          onClick={() => {
+            logout()
+            navigate('/')
+          }} 
+          style={{ 
+            position: 'absolute', 
+            top: '10px', 
+            left: '130px',
+            padding: '5px 10px'
+          }}
+        >
+          Logout
+        </button>
+        <span style={{ 
+          position: 'absolute', 
+          top: '15px', 
+          left: '220px', 
+          fontSize: '14px',
+          color: '#666'
+        }}>
+          Logged in as {currentUser?.name}
+        </span>
+      </div>
+      )}
       <h1>Choose Your Fighter!</h1>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
       {users.map(user => (

@@ -46,5 +46,53 @@
     "name": "Consistent Performers",
     "owner": 8,
     "pros": [2, 5]
+  },
+  {
+    "id": 9,
+    "name": "Tekken Titans",
+    "owner": 1,
+    "pros": [1]
+  },
+  {
+    "id": 10,
+    "name": "Fighting Legends",
+    "owner": 2,
+    "pros": [2, 5]
+  },
+  {
+    "id": 11,
+    "name": "Champions Circle",
+    "owner": 3,
+    "pros": [1, 5]
+  },
+  {
+    "id": 12,
+    "name": "Elite Warriors",
+    "owner": 4,
+    "pros": [4, 5]
+  },
+  {
+    "id": 13,
+    "name": "Street Fighters",
+    "owner": 5,
+    "pros": [2, 5]
+  },
+  {
+    "id": 14,
+    "name": "Combo Masters",
+    "owner": 6,
+    "pros": [1, 5]
+  },
+  {
+    "id": 15,
+    "name": "Power Players",
+    "owner": 7,
+    "pros": [4, 5]
+  },
+  {
+    "id": 16,
+    "name": "Victory Squad",
+    "owner": 8,
+    "pros": [2, 5]
   }
 ]

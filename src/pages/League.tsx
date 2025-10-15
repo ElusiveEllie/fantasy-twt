@@ -1,13 +1,15 @@
-import { useState, useEffect } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
-import type { User, League } from '../types';
-import { getLeagueById } from '../services/leagues';
-import { useAuth } from '../contexts/AuthContext';
+import { getLeagueById } from "../services/leagues";
+import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import type { User, League } from "../types";
+import { useAuth } from "../contexts/AuthContext";
+import { checkLeagueMembership } from "../services/auth";
 
-function Dashboard() {
+function LeaguePage () {
+  const { leagueId } = useParams();
+  const [league, setLeague] = useState<League | null>(null);
   const [user, setUser] = useState<User | null>(null)
-  const [leagues, setLeagues] = useState<League[]>([])
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null)
 
   const { logout, currentUser, isLoading } = useAuth();
@@ -23,14 +25,19 @@ function Dashboard() {
   useEffect(() => {
     const fetchData = async () => {
       if (!currentUser) return
+      if (!leagueId) return
+
+      const foundLeague = await getLeagueById(Number(leagueId))
+      const inLeague = await checkLeagueMembership(currentUser.id, Number(leagueId))
+      if (!foundLeague || !inLeague) {
+        navigate('/dashboard')
+        return
+      }
 
       try {
         setLoading(true);
         setUser(currentUser);
-        const leaguesData = (await Promise.all(
-          currentUser.leagues.map(id => getLeagueById(id))
-        )).filter(league => league !== null) as League[];
-        setLeagues(leaguesData);
+        setLeague(foundLeague);
       } catch (err: any) {
         setError(err.message || String(err));
       } finally {
@@ -39,7 +46,7 @@ function Dashboard() {
     }
 
     fetchData();
-  }, [currentUser])
+  }, [currentUser, leagueId])
 
   if (error) {
     return (
@@ -92,7 +99,7 @@ function Dashboard() {
         <span style={{ 
           position: 'absolute', 
           top: '15px', 
-          left: '220px', 
+          left: '220px',
           fontSize: '14px',
           color: '#666'
         }}>
@@ -100,30 +107,14 @@ function Dashboard() {
         </span>
       </div>
       )}
-      
-      <h1>Dashboard</h1>
-      <p>Current user: {user?.name}</p>
-      <h2>Leagues:</h2>
-      <ul>
-        {leagues.map(league => (
-          <li key={league.id}>
-            <Link
-            to={`/league/${league.id}`}
-            style={{
-              textDecoration: 'none',
-              color: '#0066cc',
-              fontSize: '16px',
-              display: 'block',
-              padding: '8px 0',
-              borderBottom: '1px solid #eee'
-            }}>
-              {league.name}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <h1>League stuff!</h1>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+      {"League " + leagueId}
+    </div>
     </div>
   )
+
 }
 
-export default Dashboard
+
+export default LeaguePage;
