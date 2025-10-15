@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import type { User, League } from '../types';
-import { getUserById } from '../services/users';
 import { getLeagueById } from '../services/leagues';
+import { useAuth } from '../contexts/AuthContext';
 
 function Dashboard() {
   const [user, setUser] = useState<User | null>(null)
@@ -10,26 +10,24 @@ function Dashboard() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  const { userId } = useParams();
+  const { logout, currentUser } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!currentUser) {
+      navigate('/')
+    }
+  }, [currentUser, navigate])
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!currentUser) return
+
       try {
         setLoading(true);
-        const userIdNum = parseInt(userId || '');
-        console.log('userId from URL:', userId);
-        console.log('userIdNum:', userIdNum);
-        console.log('isNaN check:', isNaN(userIdNum));
-        if (isNaN(userIdNum)) {
-          throw new Error('Invalid user ID');
-        }
-        const userData = await getUserById(userIdNum);
-        if (!userData) {
-          throw new Error('User not found');
-        }
-        setUser(userData);
+        setUser(currentUser);
         const leaguesData = (await Promise.all(
-          userData.leagues.map(id => getLeagueById(id))
+          currentUser.leagues.map(id => getLeagueById(id))
         )).filter(league => league !== null) as League[];
         setLeagues(leaguesData);
       } catch (err: any) {
@@ -40,7 +38,7 @@ function Dashboard() {
     }
 
     fetchData();
-  }, [userId])
+  }, [currentUser])
 
   if (error) {
     return (
@@ -61,6 +59,20 @@ function Dashboard() {
 
   return (
     <div>
+      <button 
+      onClick={() => {
+        logout()
+        navigate('/')
+      }} 
+      style={{ 
+        position: 'absolute', 
+        top: '10px', 
+        left: '10px',
+        padding: '5px 10px'
+      }}
+    >
+      Logout
+    </button>
       <h1>Dashboard</h1>
       <p>Current user: {user?.name}</p>
       <h2>Leagues:</h2>
