@@ -1,11 +1,11 @@
-import { getLeagueById } from "../services/leagues";
-import { useParams, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import type { User, League } from "../types";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import ErrorCard from "../components/ErrorCard";
+import LoadingSpinner from "../components/LoadingSpinner";
 import { useAuth } from "../contexts/AuthContext";
 import { checkLeagueMembership } from "../services/auth";
-import LoadingSpinner from "../components/LoadingSpinner";
-import ErrorCard from "../components/ErrorCard";
+import { getLeagueById } from "../services/leagues";
+import type { League, User } from "../types";
 
 function LeaguePage() {
   const { leagueId } = useParams();

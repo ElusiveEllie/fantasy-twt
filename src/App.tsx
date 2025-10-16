@@ -1,10 +1,10 @@
-import { Routes, Route } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
+import Layout from "./components/Layout";
+import { AuthProvider } from "./contexts/AuthContext";
 import Dashboard from "./pages/Dashboard";
 import HomePage from "./pages/HomePage";
 import LeaguePage from "./pages/League";
-import { AuthProvider } from "./contexts/AuthContext";
-import "./App.css";
-import Layout from "./components/Layout";
 
 function App() {
   return (

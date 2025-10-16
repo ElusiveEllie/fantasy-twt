@@ -1,10 +1,10 @@
-import { useAuth } from "../contexts/AuthContext";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllUsers } from "../services/users";
-import { useState, useEffect } from "react";
-import LoadingSpinner from "../components/LoadingSpinner";
-import type { User } from "../types";
 import ErrorCard from "../components/ErrorCard";
+import LoadingSpinner from "../components/LoadingSpinner";
+import { useAuth } from "../contexts/AuthContext";
+import { getAllUsers } from "../services/users";
+import type { User } from "../types";
 
 function HomePage() {
   const { login } = useAuth();

@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import type { User, League } from "../types";
-import { getLeagueById } from "../services/leagues";
-import { useAuth } from "../contexts/AuthContext";
-import LoadingSpinner from "../components/LoadingSpinner";
 import ErrorCard from "../components/ErrorCard";
+import LoadingSpinner from "../components/LoadingSpinner";
+import { useAuth } from "../contexts/AuthContext";
+import { getLeagueById } from "../services/leagues";
+import type { League, User } from "../types";
 
 function Dashboard() {
   const [user, setUser] = useState<User | null>(null);
