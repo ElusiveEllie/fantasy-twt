@@ -1,11 +1,11 @@
-import usersData from '../data/users.json'
+import usersData from "../data/users.json";
 
 export const getUserById = async (id: number) => {
-  await new Promise(resolve => setTimeout(resolve, 500)); // Simulate delay
-  return usersData.find(user => user.id === id) || null;
+  await new Promise((resolve) => setTimeout(resolve, 500)); // Simulate delay
+  return usersData.find((user) => user.id === id) || null;
 };
 
 export const getAllUsers = async () => {
-  await new Promise(resolve => setTimeout(resolve, 500)); // Simulate delay
+  await new Promise((resolve) => setTimeout(resolve, 500)); // Simulate delay
   return usersData;
 };

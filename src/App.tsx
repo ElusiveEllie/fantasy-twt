@@ -1,13 +1,12 @@
-import { Routes, Route } from 'react-router-dom'
-import Dashboard from './pages/Dashboard'
-import HomePage from './pages/HomePage'
-import LeaguePage from './pages/League'
-import { AuthProvider } from './contexts/AuthContext'
-import './App.css'
-import Layout from './components/Layout'
+import { Routes, Route } from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
+import HomePage from "./pages/HomePage";
+import LeaguePage from "./pages/League";
+import { AuthProvider } from "./contexts/AuthContext";
+import "./App.css";
+import Layout from "./components/Layout";
 
 function App() {
-
   return (
     <AuthProvider>
       <Layout>
@@ -18,7 +17,7 @@ function App() {
         </Routes>
       </Layout>
     </AuthProvider>
-  )
+  );
 }
 
-export default App
+export default App;
