@@ -1,4 +1,4 @@
-import { getLeagueById } from "./leagues";
+import { getLeagueById } from "./leaguesImport";
 
 export const checkLeagueMembership = async (
   userId: number,

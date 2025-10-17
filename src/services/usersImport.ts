@@ -1,4 +1,4 @@
-import usersData from "../data/users.json";
+import usersData from "../data/users";
 
 export const getUserById = async (id: number) => {
   await new Promise((resolve) => setTimeout(resolve, 500)); // Simulate delay

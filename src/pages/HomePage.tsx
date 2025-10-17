@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import ErrorCard from "../components/ErrorCard";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { useAuth } from "../contexts/AuthContext";
-import { getAllUsers } from "../services/users";
+import { getAllUsers } from "../services/usersImport";
 import type { User } from "../types";
 
 function HomePage() {

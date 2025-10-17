@@ -1,4 +1,4 @@
-import leaguesData from "../data/leagues.json";
+import leaguesData from "../data/leagues";
 
 export const getLeagueById = async (id: number) => {
   await new Promise((resolve) => setTimeout(resolve, 500)); // Simulate delay

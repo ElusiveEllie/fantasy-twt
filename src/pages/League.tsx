@@ -4,7 +4,7 @@ import ErrorCard from "../components/ErrorCard";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { useAuth } from "../contexts/AuthContext";
 import { checkLeagueMembership } from "../services/auth";
-import { getLeagueById } from "../services/leagues";
+import { getLeagueById } from "../services/leaguesImport";
 import type { League, User } from "../types";
 
 function LeaguePage() {

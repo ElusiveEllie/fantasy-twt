@@ -10,6 +10,7 @@ export interface League {
   name: string;
   users: number[];
   teams: number[];
+  standings: Record<string, { wins: number, losses: number, draws: number }>;
 }
 
 export interface Team {
@@ -17,6 +18,18 @@ export interface Team {
   name: string;
   owner: number;
   pros: number[];
+}
+
+export interface Tournament {
+  id: number;
+  name: string;
+  participants: number[]
+}
+
+export interface Pro {
+  id: number;
+  name: string;
+  cost: number;
 }
 
 export interface AuthContextType {

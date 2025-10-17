@@ -1,0 +1,31 @@
+import type { Tournament } from "../types";
+
+const tournaments: Tournament[] = [
+  {
+    id: 1,
+    name: "EVO Japan",
+    participants: [1, 2, 4, 5],
+  },
+  {
+    id: 2,
+    name: "EVO",
+    participants: [1, 2, 3, 4, 5],
+  },
+  {
+    id: 3,
+    name: "Combo Breaker",
+    participants: [3, 4, 5],
+  },
+  {
+    id: 4,
+    name: "CEO",
+    participants: [1, 2, 3],
+  },
+  {
+    id: 5,
+    name: "TWT Finals",
+    participants: [1, 2, 3, 4, 5],
+  },
+];
+
+export default tournaments;
